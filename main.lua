@@ -32,7 +32,7 @@ function love.load(arg)
   ballAngle=50
   
   -- TODO 18: Comment all the code of the TODO 8 and initialize the ball speed without sign
-  ballSpeed = 3
+  ballSpeed = 2
   -- TODO 21: Initialize the player and cpu points variables
   playerPoints = 0
   cpuPoints = 0
@@ -54,30 +54,44 @@ if love.keyboard.isDown("down") then
 end
 
   -- TODO 14: Detect the ball collision with the player paddle and make it bounce
-DeltaX= ballX - math.max(playerX, math.min(ballX,playerX+10));
-DeltaY = ballY - math.max(playerY, math.min(ballY, playerY+50));
-if(DeltaX*DeltaX+DeltaY*DeltaY)<(20*20)then
-  ballSpeed=3
-end
+--DeltaX= ballX - math.max(playerX, math.min(ballX,playerX+10));
+--DeltaY = ballY - math.max(playerY, math.min(ballY, playerY+50));
+--if(DeltaX*DeltaX+DeltaY*DeltaY)<(20*20)then
+  --ballSpeed=3
+--end
 
   -- TODO 15: Detect the ball collision with the cpu paddle and make it bounce
-DeltaXCpu= ballX - math.max(cpuX, math.min(ballX,cpuX+10));
-DeltaYCpu = ballY - math.max(cpuY, math.min(ballY, cpuY+50));
-if(DeltaXCpu*DeltaXCpu+DeltaYCpu*DeltaYCpu)<(20*20)then
-  ballSpeed=-3
-end
+--DeltaXCpu= ballX - math.max(cpuX, math.min(ballX,cpuX+10));
+--DeltaYCpu = ballY - math.max(cpuY, math.min(ballY, cpuY+50));
+--if(DeltaXCpu*DeltaXCpu+DeltaYCpu*DeltaYCpu)<(20*20)then
+  --ballSpeed=-3
+--end
 
 
 
   -- TODO 25: Add the needed code at TODO 19 to make the ball quicker at paddle collision
   -- TODO 19: Comment all the code of the TODO 14 and TODO 15 and make it bounce using the new ball angle
-  
+    DeltaXCpu= ballX - math.max(cpuX, math.min(ballX,cpuX+10));
+    DeltaYCpu = ballY - math.max(cpuY, math.min(ballY, cpuY+50));
+    if(DeltaXCpu*DeltaXCpu+DeltaYCpu*DeltaYCpu)<(20*20)then
+      --ballSpeed=3
+      ballAngle = math.pi - ballAngle
+      ballSpeed = ballSpeed + 1
+    end
+    DeltaX= ballX - math.max(playerX, math.min(ballX,playerX+10));
+    DeltaY = ballY - math.max(playerY, math.min(ballY, playerY+50));
+    if(DeltaX*DeltaX+DeltaY*DeltaY)<(20*20)then
+      --ballSpeed=-3
+      ballAngle = math.pi - ballAngle
+      ballSpeed = ballSpeed + 1
+    end
+    
   -- TODO 20: Detect the ball collision with the top and bottom of the field and make it bounce
      if ballY < ballRadius/2 then 
-       ballY = ballY + ballSpeed
+       ballAngle =  - ballAngle
      end
      if ballY > h - ballRadius/2 then
-       ballY = ballY - ballSpeed
+       ballAngle =  - ballAngle
      end
      
   --DeltaY = ballY - math.max(playerY, math.min(ballY, playerY+50));
@@ -88,13 +102,13 @@ end
     cpuPoints = cpuPoints +1
     ballX = w/2
     ballY = h/2
-    ballSpeed = 3
+    ballSpeed = 2
   end
   if ballX >= 795 then
     playerPoints = playerPoints + 1
     ballX = w/2
     ballY = h/2
-    ballSpeed = 3
+    ballSpeed = 2
   end
   
   
